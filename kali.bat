@@ -4,14 +4,14 @@ setlocal enabledelayedexpansion
 chcp 65001 > nul
 
 :main
-echo [36m#-[34m([0m%userprofile%@kali[34m)[0m-[%cd%][0m
-set /p w="[34m\-# [32m
+echo [34m╔══[91m([0m%userprofile%@kali[91m)[0m[34m-[0m[91m[[0m%cd%[91m][0m[0m
+set /p w="[34m╚══[91m#[0m [32m
 
 %w%
 
 if /I "%w%" EQU "cat" ( type )
 
-if /I "%w%" == "clear" ( cls ) 
+if /I "%w%" EQU "clear" ( cls ) 
 
 if /I "%w%" EQU "ls" ( dir ) 
 
@@ -40,6 +40,14 @@ if /I "%w%" EQU "reboot" ( goto rebooting )
 if /I "%w%" EQU "bruteforce" ( goto bruteforce ) 
 
 if /I "%w%" EQU "shutdown now" ( goto shut ) 
+
+if /I "%w%" EQU "apt install notpadpp" ( goto notpadpp-config )
+
+if /I "%w%" EQU "apt install msfconsole" ( goto metasploit-config )
+
+if /I "%w%" EQU "msfconsole" ( goto msfconsole )
+
+if /I "%w%" EQU "bye" ( goto goodbye )
 
 goto main
 
@@ -86,6 +94,10 @@ echo 7:[92mreboot[0m
 echo 8:[92mapt install netcat[0m
 echo 9:[92mapt install hydra[0m
 echo 10:[92mapt install python3[0m
+echo 11:[92mapt install msfconsole[0m
+echo 12:[92mmsfconsole[0m
+echo 13:[92mbye[0m
+echo 14:[92mshutdown now[0m
 pause > nul
 goto main
 
@@ -168,3 +180,26 @@ goto main
 cd /
 shutdown /s /t 2
 tree
+
+:notpadpp-config
+curl https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.7.1/npp.8.7.1.Installer.x64.exe -o notpadpp.exe
+notpadpp.exe
+goto main
+
+:metasploit-config
+curl https://downloads.metasploit.com/data/releases/metasploit-latest-windows-x64-installer.exe -o msfconsole-installer.exe
+msfconsole-installer.exe
+goto main
+
+
+:msfconsole
+cd C:\metasploit
+console.bat
+goto main
+
+
+:goodbye
+cls
+echo BYE!
+timeout /t 2 > nul
+exit
